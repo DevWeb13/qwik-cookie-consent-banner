@@ -1,6 +1,6 @@
 {
   "name": "qwik-cookie-consent-banner",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Qwik Cookie Consent Banner",
   "main": "./lib/index.qwik.mjs",
   "qwik": "./lib/index.qwik.mjs",
