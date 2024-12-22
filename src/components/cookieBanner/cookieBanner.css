@@ -56,5 +56,6 @@
   background-color: #555;
   color: #fff;
   cursor: pointer;
+  z-index: 50;
 }
 
