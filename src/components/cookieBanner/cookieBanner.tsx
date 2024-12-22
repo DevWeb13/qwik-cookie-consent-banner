@@ -51,7 +51,7 @@ export const CookieBanner = component$((props: CookieBannerProps) => {
       {consentGiven.value && props.id && <GoogleAnalytics id={props.id} />}
       {showBanner.value ? (
         <div
-          class={`fixed bottom-0 left-0 right-0 p-4 text-center ${
+          class={`fixed bottom-0 left-0 right-0 z-50 p-4 text-center ${
             props.bannerClass || "bg-gray-800 text-white"
           }`}
         >
