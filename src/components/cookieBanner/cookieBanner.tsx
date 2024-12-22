@@ -1,8 +1,8 @@
 // src/components/cookieBanner/cookieBanner.tsx
 
-import { component$, useSignal, $, useOnWindow } from "@builder.io/qwik";
+import { component$, useSignal, $, useOnWindow, useStyles$ } from "@builder.io/qwik";
 import { GoogleAnalytics } from "../googleAnalytics/googleAnalytics";
-import "./cookieBanner.css";
+import styles from "./cookieBanner.css?inline";
 
 interface CookieBannerProps {
   id?: string; // ID pour Google Analytics
@@ -18,6 +18,8 @@ interface CookieBannerProps {
 }
 
 export const CookieBanner = component$((props: CookieBannerProps) => {
+  useStyles$(styles);
+
   const showBanner = useSignal(false);
   const consentGiven = useSignal(false);
 
