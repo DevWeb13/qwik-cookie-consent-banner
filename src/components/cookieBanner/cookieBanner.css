@@ -1,0 +1,60 @@
+/* Styles par défaut pour la bannière */
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  padding: 1rem;
+  text-align: center;
+  background-color: #333;
+  color: #fff;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.cookie-banner.hidden {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.cookie-banner p {
+  margin-bottom: 1rem;
+}
+
+.cookie-banner a {
+  color: #4f83cc;
+  text-decoration: underline;
+}
+
+.cookie-banner button {
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cookie-banner .accept-button {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.cookie-banner .decline-button {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.modify-consent-button {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #555;
+  color: #fff;
+  cursor: pointer;
+}
+
