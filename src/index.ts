@@ -1,2 +1,2 @@
-export { Logo } from "./components/logo/logo";
-export { Counter } from "./components/counter/counter";
+export { CookieBanner } from "./components/cookieBanner/cookieBanner";
+export { GoogleAnalytics } from "./components/googleAnalytics/googleAnalytics";
