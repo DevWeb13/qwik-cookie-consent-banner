@@ -1,7 +1,13 @@
 // src/components/cookieBanner/cookieBanner.tsx
 
-import { component$, useSignal, $, useOnWindow, useStyles$ } from "@builder.io/qwik";
-import { GoogleAnalytics } from "../googleAnalytics/googleAnalytics";
+import {
+  component$,
+  useSignal,
+  $,
+  useOnWindow,
+  useStyles$,
+} from "@builder.io/qwik";
+import { initializeGoogleAnalytics, removeGoogleAnalytics } from "../../utils/googleAnalytics";
 import styles from "./cookieBanner.css?inline";
 
 interface CookieBannerProps {
@@ -32,13 +38,16 @@ export const CookieBanner = component$((props: CookieBannerProps) => {
   });
 
   useOnWindow(
-    "load",
+    "DOMContentLoaded",
     $(() => {
       if (typeof localStorage !== "undefined") {
         try {
           const consent = localStorage.getItem("cookie-consent");
           if (consent === "accepted") {
             consentGiven.value = true;
+            if (props.id) {
+              initializeGoogleAnalytics(props.id);
+            }
           } else if (!consent) {
             showBanner.value = true;
           }
@@ -46,19 +55,23 @@ export const CookieBanner = component$((props: CookieBannerProps) => {
           console.error("Erreur lors de la lecture depuis localStorage", e);
         }
       }
-    }),
+    })
   );
 
   const acceptCookies = $(() => {
     setConsent("cookie-consent", "accepted");
     showBanner.value = false;
     consentGiven.value = true;
+    if (props.id) {
+      initializeGoogleAnalytics(props.id);
+    }
   });
 
   const declineCookies = $(() => {
     setConsent("cookie-consent", "declined");
     showBanner.value = false;
     consentGiven.value = false;
+    removeGoogleAnalytics();
   });
 
   const modifyConsent = $(() => {
@@ -67,15 +80,14 @@ export const CookieBanner = component$((props: CookieBannerProps) => {
 
   return (
     <>
-      {consentGiven.value && props.id && <GoogleAnalytics id={props.id} />}
       {showBanner.value ? (
-        <div class={`cookie-banner ${props.bannerClass || ""}`}>
+        <div class={`${props.bannerClass || "cookie-banner"}`}>
           <p>
             {props.message ||
               "Nous utilisons des cookies pour améliorer votre expérience. En continuant, vous acceptez notre "}
             <a
               href={props.privacyPolicyLink || "/privacy-policy"}
-              class={`${props.linkClass || ""}`}
+              class={`${props.linkClass || "link-class"}`}
               aria-label="Politique de confidentialité"
             >
               politique de confidentialité
@@ -83,14 +95,14 @@ export const CookieBanner = component$((props: CookieBannerProps) => {
             .
           </p>
           <button
-            class={`accept-button ${props.buttonClass || ""}`}
+            class={`${props.buttonClass || "accept-button"}`}
             onClick$={acceptCookies}
             aria-label="Accepter les cookies"
           >
             {props.acceptLabel || "Accepter"}
           </button>
           <button
-            class={`decline-button ${props.buttonClass || ""}`}
+            class={`${props.buttonClass || "decline-button"}`}
             onClick$={declineCookies}
             aria-label="Refuser les cookies"
           >
@@ -99,7 +111,7 @@ export const CookieBanner = component$((props: CookieBannerProps) => {
         </div>
       ) : (
         <button
-          class={`modify-consent-button ${props.modifyButtonClass || ""}`}
+          class={`${props.modifyButtonClass || "modify-consent-button"}`}
           onClick$={modifyConsent}
           aria-label="Modifier le consentement des cookies"
         >
